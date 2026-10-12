@@ -2,36 +2,36 @@ package com.example.tp;
 
 public class Main {
     public static void main(String[] args) {
-        Flotte flotte = new Flotte();
+        // 1. Création des comptes
+        Compte compte1 = new Compte(1000.0);
+        CompteEpargne ce = new CompteEpargne(500.0, 3.0);
+        CompteCourant cc = new CompteCourant(200.0, 300.0);
 
-        Voiture v1 = new Voiture("Clio", new Moteur("Essence",75), 50, 5);
-        Camion  c1 = new Camion("Volvo", new Moteur("Diesel",400),200,20);
-        Moto    m1 = new Moto("Harley", new Moteur("Essence",90),20,1200);
-        VoitureElectrique e1 = new VoitureElectrique("Tesla", new Moteur("Élec",300),85);
-
-        flotte.ajouter(v1);
-        flotte.ajouter(c1);
-        flotte.ajouter(m1);
-        flotte.ajouter(e1);
-
-        flotte.afficherTous();
+        // 2. Opérations sur Compte de base
+        compte1.afficherDetails();
+        compte1.deposer(200);
+        compte1.retirer(1500); // refuse
+        compte1.afficherDetails();
         System.out.println();
 
-        // Scénario de conduite
-        
-        v1.demarrer();
-        v1.rouler(100);
-        v1.refuel(20);
-        v1.rouler(300);
-
+        // 3. Opérations sur CompteEpargne
+        ce.afficherDetails();
+        ce.appliquerInterets();
+        ce.afficherDetails();
+        ce.retirer(100);
+        ce.afficherDetails();
         System.out.println();
-        e1.demarrer();
-        e1.rouler(200);
-        e1.refuel(50);
-        e1.rouler(300);
 
+        // 4. Opérations sur CompteCourant
+        cc.afficherDetails();
+        cc.retirer(400);  // autorisé grâce au découvert
+        cc.afficherDetails();
+        cc.retirer(200);  // refusé, découvert dépassé
+        cc.afficherDetails();
         System.out.println();
-        System.out.println("Distance totale parcourue : " 
-            + flotte.distanceTotale() + " km");
+
+        // 5. Polymorphisme
+        Compte poly = new CompteEpargne(100, 5);
+        poly.afficherDetails();  // appel à CompteEpargne.afficherDetails()
     }
 }
